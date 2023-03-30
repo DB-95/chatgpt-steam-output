@@ -53,7 +53,7 @@
                 //注意ws、wss使用不同的端口。我使用自签名的证书测试，
                 //无法使用wss，浏览器打开WebSocket时报错
                 //ws对应http、wss对应https。
-                socket = new WebSocket("ws://localhost:8000/websocket/"+uid);
+                socket = new WebSocket("ws://localhost:7777/websocket/"+uid);
                 //连接打开事件
                 socket.onopen = function () {
                     console.log("Socket 已打开");
@@ -120,9 +120,6 @@
 <!--</div>-->
 <div class="float-card">
     <div class="float-card-item">
-        <a href="https://www.unfbx.com" target="_blank" rel="noopener noreferrer">Website</a>
-    </div>
-    <div class="float-card-item">
         <a href="https://github.com/Grt1228" target="_blank" rel="noopener noreferrer">Github</a>
     </div>
     <div class="float-card-item">
@@ -140,12 +137,7 @@
         <tr>
             <td>
                 <pre style="font-size: 15px">
-                    帮忙点个star吧<br/>
-                    1、依赖ChatGPT开源Java SDK：<a rel="noopener noreferrer" href="https://github.com/Grt1228/chatgpt-java"
-                                             target="_blank" style="font-size: 15px">https://github.com/Grt1228/chatgpt-java</a><br/>
-                    2、本项目免费开源地址：<a rel="noopener noreferrer" href="https://github.com/Grt1228/chatgpt-steam-output"
-                                   target="_blank" style="font-size: 15px">https://github.com/Grt1228/chatgpt-steam-output</a><br/>
-                    3、默认保持连接5分钟，默认上下文保持10个，5分钟无请求上下文会话销毁。
+                    默认保持连接5分钟，默认上下文保持10个，5分钟无请求上下文会话销毁。
                 </pre>
             </td>
         </tr>
