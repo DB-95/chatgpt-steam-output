@@ -30,11 +30,29 @@
             return uuid;
         }
 
+        function getWsHost() {
+            // 创建一个XMLHttpRequest对象
+            var xhr = new XMLHttpRequest();
+            // 设置请求方式和请求地址
+            xhr.open('GET', '/getWsHost', false);
+            var data = "localhost:8000";
+            // 监听请求状态变化
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // 请求成功，获取响应数据
+                    data = xhr.responseText;
+                }
+            };
+            // 发送请求
+            xhr.send();
+            return data;
+        }
 
         window.onload = function () {
             var socket
             let uuid_str = '';
             let text = '';
+            let wsHost = getWsHost();
             let disconnectBtn = document.getElementById("disconnectSSE");
             let messageElement = document.getElementById("message");
             let chat = document.getElementById("chat");
@@ -53,7 +71,7 @@
                 //注意ws、wss使用不同的端口。我使用自签名的证书测试，
                 //无法使用wss，浏览器打开WebSocket时报错
                 //ws对应http、wss对应https。
-                socket = new WebSocket("ws://localhost:7777/websocket/"+uid);
+                socket = new WebSocket("ws://"+wsHost+"/websocket/"+uid);
                 //连接打开事件
                 socket.onopen = function () {
                     console.log("Socket 已打开");

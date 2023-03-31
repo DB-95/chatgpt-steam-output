@@ -10,11 +10,9 @@ import com.unfbx.chatgpt.exception.CommonError;
 import com.unfbx.chatgptsteamoutput.config.LocalCache;
 import com.unfbx.chatgptsteamoutput.listener.OpenAISSEEventSourceListener;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.io.IOException;
@@ -34,6 +32,11 @@ import java.util.Map;
 public class ChatController {
 
     private final OpenAiStreamClient openAiStreamClient;
+
+    @Value("${websocket.host}")
+    private String wsHost;
+    @Value("${server.port}")
+    private String port;
 
     public ChatController(OpenAiStreamClient openAiStreamClient) {
         this.openAiStreamClient = openAiStreamClient;
@@ -90,6 +93,11 @@ public class ChatController {
     @GetMapping("/websocket")
     public String websocket() {
         return "websocket.html";
+    }
+    @GetMapping("/getWsHost")
+    @ResponseBody
+    public String getWsHost() {
+        return wsHost + ":" + port;
     }
 
 }
