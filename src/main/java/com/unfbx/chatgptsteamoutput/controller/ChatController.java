@@ -3,7 +3,6 @@ package com.unfbx.chatgptsteamoutput.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.unfbx.chatgpt.OpenAiStreamClient;
-import com.unfbx.chatgpt.entity.billing.CreditGrantsResponse;
 import com.unfbx.chatgpt.entity.chat.Message;
 import com.unfbx.chatgpt.exception.BaseException;
 import com.unfbx.chatgpt.exception.CommonError;
@@ -35,8 +34,6 @@ public class ChatController {
 
     @Value("${websocket.host}")
     private String wsHost;
-    @Value("${server.port}")
-    private String port;
 
     public ChatController(OpenAiStreamClient openAiStreamClient) {
         this.openAiStreamClient = openAiStreamClient;
@@ -97,7 +94,7 @@ public class ChatController {
     @GetMapping("/getWsHost")
     @ResponseBody
     public String getWsHost() {
-        return wsHost + ":" + port;
+        return wsHost;
     }
 
 }
