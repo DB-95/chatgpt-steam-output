@@ -31,6 +31,7 @@
 
 
         window.onload = function () {
+            let getMessagesBtn = document.getElementById("getMessages");
             let disconnectBtn = document.getElementById("disconnectSSE");
             let messageElement = document.getElementById("message");
             let chat = document.getElementById("chat");
@@ -102,6 +103,35 @@
                     sse.close();
                 }
             };
+            getMessagesBtn.onclick = function () {
+                // 创建一个XMLHttpRequest对象
+                var xhr = new XMLHttpRequest();
+                // 设置请求方式和请求地址
+                xhr.open('GET', '/getMessages', false);
+                xhr.setRequestHeader('uid', uid);
+                let data = "";
+                // 监听请求状态变化
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        // 请求成功，获取响应数据
+                        data = xhr.responseText;
+                        if (data !== "") {
+                            // 将字符串转成Blob对象
+                            let blob = new Blob([data], {type: 'text/plain'});
+                            // 创建下载链接
+                            let link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = 'file.txt';
+                            // 触发下载
+                            link.click();
+                        } else {
+                            alert("暂时无聊天信息")
+                        }
+                    }
+                };
+                // 发送请求
+                xhr.send();
+            };
 
         };
     </script>
@@ -121,6 +151,9 @@
     </div>
     <div class="float-card-item">
         <a id="disconnectSSE" rel="noopener noreferrer">停止输出</a>
+    </div>
+    <div class="float-card-item">
+        <a id="getMessages" rel="noopener noreferrer">下载记录</a>
     </div>
 </div>
 <div class="input-card">
