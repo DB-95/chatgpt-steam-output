@@ -40,6 +40,7 @@
             if (uid == null || uid == '' || uid == 'null') {
                 uid = uuid();
             }
+            let currentUuidStr = [];
             // 设置本地存储
             window.localStorage.setItem("uid", uid);
             // 回车事件
@@ -50,6 +51,7 @@
                     }
                     let text = '';
                     let uuid_str = uuid();
+                    currentUuidStr.push(uuid_str);
                     // const eventSource = new EventSource('http://localhost:8000/chat?message=' + messageElement.value);
                     const eventSource = new EventSourcePolyfill('/chat?message=' + messageElement.value, {
                         headers: {
@@ -104,33 +106,18 @@
                 }
             };
             getMessagesBtn.onclick = function () {
-                // 创建一个XMLHttpRequest对象
-                var xhr = new XMLHttpRequest();
-                // 设置请求方式和请求地址
-                xhr.open('GET', '/getMessages', false);
-                xhr.setRequestHeader('uid', uid);
-                let data = "";
-                // 监听请求状态变化
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        // 请求成功，获取响应数据
-                        data = xhr.responseText;
-                        if (data !== "") {
-                            // 将字符串转成Blob对象
-                            let blob = new Blob([data], {type: 'text/plain'});
-                            // 创建下载链接
-                            let link = document.createElement('a');
-                            link.href = window.URL.createObjectURL(blob);
-                            link.download = 'file.txt';
-                            // 触发下载
-                            link.click();
-                        } else {
-                            alert("暂时无聊天信息")
-                        }
-                    }
-                };
-                // 发送请求
-                xhr.send();
+                let str = "";
+                for (let i = 0; i < currentUuidStr.length; i++) {
+                    let content = document.getElementById(currentUuidStr[i])
+                    str += content.innerHTML;
+                }
+                let blob = new Blob([str], {type: 'text/plain'});
+                // 创建下载链接
+                let link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'file.txt';
+                // 触发下载
+                link.click();
             };
 
         };

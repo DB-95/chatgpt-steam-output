@@ -97,11 +97,4 @@ public class ChatController {
         return wsHost;
     }
 
-    @GetMapping("/getMessages")
-    @ResponseBody
-    public String getMessages(@RequestHeader Map<String, String> headers) {
-        String uid = headers.get("uid");
-        return (String) LocalCache.CACHE.get(uid);
-    }
-
 }
